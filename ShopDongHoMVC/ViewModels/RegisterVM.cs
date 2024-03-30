@@ -5,19 +5,20 @@ namespace ShopDongHoMVC.ViewModels
     public class RegisterVM
     {
         [Display(Name ="Tên Đăng Nhập")]
-        [Required(ErrorMessage ="*")]
+        [Required(ErrorMessage ="Tên đăng nhập không được để trống")]
         [MaxLength(20, ErrorMessage ="Tối đa 20 kí tự ")]
         public string MaKh { get; set; }
         [Display(Name ="Mật Khẩu")]
+        [Required(ErrorMessage = "Mật khẩu không được để trống")]
         public string MatKhau { get; set; }
-        [Required(ErrorMessage ="*")]
+        [Required(ErrorMessage ="Vui lòng nhập họ tên")]
         [MaxLength(50, ErrorMessage = "Tối đa 50 kí tự ")]
         [Display(Name ="Họ Tên")]
         public string HoTen { get; set; } = null!;
         [Display(Name ="Giới Tính")]
         public bool GioiTinh { get; set; } = true;
         [Display(Name = "Ngày Sinh")]
-        public DateOnly? NgaySinh { get; set; }
+        public DateTime? NgaySinh { get; set; }
         [MaxLength(60, ErrorMessage = "Tối đa 60 kí tự ")]
         [Display(Name = "Địa Chỉ")]
         public string DiaChi { get; set; }
