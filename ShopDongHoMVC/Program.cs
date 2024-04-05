@@ -1,7 +1,10 @@
+using BTTuan3.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using ShopDongHoMVC.Data;
 using ShopDongHoMVC.Helpers;
+using ShopDongHoMVC.Models;
 using ShopDongHoMVC.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +17,10 @@ builder.Services.AddDbContext<DongHoShopMvcContext>(option =>
 });
 
 builder.Services.AddDistributedMemoryCache();
-
+builder.Services.AddScoped<IProductRepository, EFProductRepository>();
+builder.Services.AddScoped<ICategoryReposity, EFCategoryRepository>();
+builder.Services.AddScoped<IKhachHangRepository, EFKhachHangRepository>();
+builder.Services.AddScoped<IOrderRepository, EFOrderRepository>();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(10);
