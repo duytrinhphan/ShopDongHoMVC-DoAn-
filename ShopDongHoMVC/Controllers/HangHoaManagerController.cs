@@ -1,125 +1,148 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using ShopDongHoMVC.Data;
 using ShopDongHoMVC.Models;
+using ShopDongHoMVC.ViewModels;
 
 namespace ShopDongHoMVC.Controllers
 {
     public class HangHoaManagerController : Controller
     {
-        private readonly IProductRepository _productRepository;
-        private readonly ICategoryReposity _categoryRepository;
-        public HangHoaManagerController(IProductRepository productRepository,
-ICategoryReposity categoryRepository)
+
+
+        private readonly DongHoShopMvcContext db;
+        public HangHoaManagerController(DongHoShopMvcContext context) 
         {
-            _productRepository = productRepository;
-            _categoryRepository = categoryRepository;
+            db = context;        
         }
-        public async Task<IActionResult> Index()
+
+
+        public IActionResult Index()
         {
-            var products = await _productRepository.GetAllAsync();
-            return View(products);
+            List<HangHoa> listsanpham = db.HangHoas.ToList();
+            return View(listsanpham);
         }
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-            var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+
+            List<Loai> listloai = db.Loais.ToList();
+            List<NhaCungCap> Listnhacungcap=db.NhaCungCaps.ToList();
+            ViewBag.Loais = new SelectList(listloai, "MaLoai", "TenLoai");
+            ViewBag.NhaCungCaps = new SelectList(Listnhacungcap, "MaNcc", "TenCongTy");
             return View();
         }
-
+       
         [HttpPost]
-        public async Task<IActionResult> Create(HangHoa product, IFormFile imageUrl)
+        public IActionResult Create(HangHoa product)
         {
-            if (ModelState.IsValid)
-            {
-                if (imageUrl != null)
+        
+                if (product == null)
                 {
-                    product.Hinh = await SaveImage(imageUrl);
+                    return View(product);
                 }
-                await _productRepository.AddAsync(product);
-                return RedirectToAction(nameof(Index));
-            }
-            // Nếu ModelState không hợp lệ, hiển thị form với dữ liệu đã nhập
-            var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name");
-            return View(product);
+
+                db.HangHoas.Add(product);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+     
+         
         }
-        private async Task<string> SaveImage(IFormFile image)
+
+        public IActionResult Details(int id)
         {
-            var savePath = Path.Combine("wwwroot/images", image.FileName); // Thay đổi đường dẫn theo cấu hình của bạn
-            using (var fileStream = new FileStream(savePath, FileMode.Create))
-            {
-                await image.CopyToAsync(fileStream);
-            }
-            return "/images/" + image.FileName; // Trả về đường dẫn tương đối
-        }
-        public async Task<IActionResult> Edit(int id)
-        {
-            var product = await _productRepository.GetByIdAsync(id);
-            if (product == null)
+            var item = db.HangHoas.FirstOrDefault(x => x.MaHh == id);
+            if (item == null) 
             {
                 return NotFound();
             }
-            var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name",
-            product.MaLoai);
-            return View(product);
+
+            return View(item);
         }
-        // Xử lý cập nhật sản phẩm
+
+        public IActionResult Edit(int id) 
+        {
+            List<Loai> listloai = db.Loais.ToList();
+            List<NhaCungCap> Listnhacungcap = db.NhaCungCaps.ToList();
+            ViewBag.Loais = new SelectList(listloai, "MaLoai", "TenLoai");
+            ViewBag.NhaCungCaps = new SelectList(Listnhacungcap, "MaNcc", "TenCongTy");
+            var item = db.HangHoas.SingleOrDefault(x => x.MaHh == id);
+            if(item == null) 
+            {
+                return NotFound();
+            }
+
+            return View(item);
+        }
+
+
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, HangHoa product, IFormFile imageUrl)
+        public IActionResult Edit(HangHoa product)
         {
-            if (id != product.MaHh)
-            {
-                return NotFound();
-            }
-            if (ModelState.IsValid)
-            {
-                if (imageUrl != null)
+        
+                var item = db.HangHoas.SingleOrDefault(x => x.MaHh == product.MaHh);
+                if (item == null)
                 {
-                    product.Hinh = await SaveImage(imageUrl);
+                    return NotFound();
                 }
-                await _productRepository.UpdateAsync(product);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(product);
+
+                item.TenHh = product.TenHh;
+                item.TenAlias=product.TenAlias;
+                item.MaLoai=product.MaLoai;
+                item.DonGia=product.DonGia;
+                item.Hinh=product.Hinh;
+                item.NgaySx=product.NgaySx;
+                item.GiamGia=product.GiamGia;
+                item.MoTa=product.MoTa;
+                item.MaNcc=product.MaNcc;
+
+            
+
+                // Lưu thay đổi vào cơ sở dữ liệu
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+         
         }
-        public async Task<IActionResult> Details(int id)
+
+        public IActionResult Delete(int id)
         {
-            var product = await _productRepository.GetByIdAsync(id);
-            if (product == null)
+            List<Loai> listloai = db.Loais.ToList();
+            List<NhaCungCap> Listnhacungcap = db.NhaCungCaps.ToList();
+            ViewBag.Loais = new SelectList(listloai, "MaLoai", "TenLoai");
+            ViewBag.NhaCungCaps = new SelectList(Listnhacungcap, "MaNcc", "TenCongTy");
+            var item = db.HangHoas.SingleOrDefault(x => x.MaHh == id);
+            if (item == null)
             {
                 return NotFound();
             }
-            var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name",
-            product.MaLoai);
-            return View(product);
-        }
-        public async Task<IActionResult> Delete(int id)
-        {
-            var product = await _productRepository.GetByIdAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name",
-            product.MaLoai);
-            return View(product);
+
+            return View(item);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(int id, HangHoa product)
+
+        public IActionResult Delete(HangHoa product)
         {
-            if (id != product.MaHh)
+
+            var item = db.HangHoas.SingleOrDefault(x => x.MaHh == product.MaHh);
+            if (item == null)
             {
                 return NotFound();
             }
 
-            await _productRepository.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
+           db.HangHoas.Remove(item);
+
+            // Lưu thay đổi vào cơ sở dữ liệu
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+
         }
+
+
+       
     }
 }

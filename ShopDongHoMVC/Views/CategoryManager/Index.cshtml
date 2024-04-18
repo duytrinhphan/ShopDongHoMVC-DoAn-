@@ -2,14 +2,18 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutFrame.cshtml";
 }
 
-<h1>Index</h1>
+<h1 style="text-align: center;background-color: #002D21;color: #daa37f;padding-top: 10px;">QUẢN LÝ LOẠI SẢN PHẨM</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <center>
+        <div class="card btn btn-primary" style="width: 212.95px; text-align: center; background-color: #002d21">
+            <a asp-action="Create">Thêm loại mới</a>
+        </div>
 </p>
-<table class="table">
+<table class="table" style="color: black">
     <thead>
         <tr>
             <th>
@@ -28,26 +32,28 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenLoai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TenLoaiAlias)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MoTa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Hinh)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaLoai">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaLoai">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaLoai">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenLoai)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenLoaiAlias)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MoTa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hinh)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.MaLoai">Sửa loại</a> |
+                    <a asp-action="Details" asp-route-id="@item.MaLoai">Xem chi tiết</a> |
+                    <a asp-action="Delete" asp-route-id="@item.MaLoai">Xóa</a>
+                </td>
+            </tr>
+        }
     </tbody>
+    </center>
 </table>

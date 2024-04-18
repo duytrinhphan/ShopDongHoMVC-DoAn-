@@ -2,47 +2,48 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutFrame.cshtml";
 }
 
-<h1>Create</h1>
+<h1 class="text-center" style="background-color: #002D21; color: #daa37f; padding: 10px;">TẠO LOẠI SẢN PHẨM MỚI</h1>
 
-<h4>Loai</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TenLoai" class="control-label"></label>
-                <input asp-for="TenLoai" class="form-control" />
-                <span asp-validation-for="TenLoai" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TenLoaiAlias" class="control-label"></label>
-                <input asp-for="TenLoaiAlias" class="form-control" />
-                <span asp-validation-for="TenLoaiAlias" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MoTa" class="control-label"></label>
-                <input asp-for="MoTa" class="form-control" />
-                <span asp-validation-for="MoTa" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Hinh" class="control-label"></label>
-                <input asp-for="Hinh" class="form-control" />
-                <span asp-validation-for="Hinh" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="TenLoai" class="control-label">Tên loại:</label>
+                    <input asp-for="TenLoai" class="form-control" />
+                    <span asp-validation-for="TenLoai" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TenLoaiAlias" class="control-label">Tên định danh:</label>
+                    <input asp-for="TenLoaiAlias" class="form-control" />
+                    <span asp-validation-for="TenLoaiAlias" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MoTa" class="control-label">Mô tả:</label>
+                    <textarea asp-for="MoTa" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="MoTa" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Hinh" class="control-label">Hình ảnh:</label>
+                    <input type="file" asp-for="Hinh" class="form-control-file" />
+                    <span asp-validation-for="Hinh" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Tạo mới</button>
+                    <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

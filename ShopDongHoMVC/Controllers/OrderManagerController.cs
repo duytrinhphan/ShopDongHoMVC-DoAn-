@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ShopDongHoMVC.Data;
 
@@ -6,113 +7,145 @@ namespace ShopDongHoMVC.Controllers
 {
     public class OrderManagerController : Controller
     {
-        private readonly IOrderRepository _orderRepository;
-
-        public OrderManagerController(IOrderRepository orderRepository)
+        private readonly DongHoShopMvcContext db;
+        public OrderManagerController(DongHoShopMvcContext context)
         {
-            _orderRepository = orderRepository;
+            db = context;
         }
-
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var orders = await _orderRepository.GetAllAsync();
-            return View(orders);
+            List<HoaDon> listhoadon = db.HoaDons.ToList();
+            return View(listhoadon);
         }
-
-        [HttpGet]
-        public async Task<IActionResult> Details(int id)
-        {
-            var order = await _orderRepository.GetByIdAsync(id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-            return View(order);
-        }
-
-        [HttpGet]
         public IActionResult Create()
         {
+            List<KhachHang> listkh=db.KhachHangs.ToList();
+            ViewBag.KhachHangs = new SelectList(listkh,"MaKh","HoTen");
+            List<NhanVien>lisnv=db.NhanViens.ToList();
+            ViewBag.NhanViens = new SelectList(lisnv, "MaNv", "HoTen");
+            List<TrangThai> listtt=db.TrangThais.ToList();
+            ViewBag.TrangThais = new SelectList(listtt, "MaTrangThai", "TenTrangThai");
+            List<HoaDon> listhoadon = db.HoaDons.ToList();
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(HoaDon order)
+        public IActionResult Create(HoaDon hoaDon)
         {
-            if (ModelState.IsValid)
+
+            if (hoaDon == null)
             {
-                await _orderRepository.AddAsync(order);
-                return RedirectToAction(nameof(Index));
+                return View(hoaDon);
             }
-            return View(order);
+
+            db.HoaDons.Add(hoaDon);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
+
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public IActionResult Details(int id)
         {
-            var order = await _orderRepository.GetByIdAsync(id);
-            if (order == null)
+            var item = db.HoaDons.FirstOrDefault(x => x.MaHd == id);
+            if (item == null)
             {
                 return NotFound();
             }
-            return View(order);
+
+            return View(item);
         }
+
+
+        public IActionResult Edit(int id)
+        {
+            List<KhachHang> listkh = db.KhachHangs.ToList();
+            ViewBag.KhachHangs = new SelectList(listkh, "MaKh", "HoTen");
+            List<NhanVien> lisnv = db.NhanViens.ToList();
+            ViewBag.NhanViens = new SelectList(lisnv, "MaNv", "HoTen");
+            List<TrangThai> listtt = db.TrangThais.ToList();
+            ViewBag.TrangThais = new SelectList(listtt, "MaTrangThai", "TenTrangThai");
+            List<HoaDon> listhoadon = db.HoaDons.ToList();
+            var item = db.HoaDons.SingleOrDefault(x => x.MaHd == id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return View(item);
+        }
+
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, HoaDon order)
+        public IActionResult Edit(HoaDon hd)
         {
-            if (id != order.MaHd)
+
+            var item = db.HoaDons.SingleOrDefault(x => x.MaHd == hd.MaHd);
+            if (item == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await _orderRepository.UpdateAsync(order);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!await OrderExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(order);
+            item.MaHd = hd.MaHd;
+            item.MaKh = hd.MaKh;
+            item.NgayDat = hd.NgayDat;
+            item.NgayCan = hd.NgayCan;
+            item.NgayGiao= hd.NgayGiao;
+            item.HoTen = hd.HoTen;
+            item.DiaChi = hd.DiaChi;
+            item.CachThanhToan = hd.CachThanhToan;
+            item.CachVanChuyen= hd.CachVanChuyen;
+            item.PhiVanChuyen = hd.PhiVanChuyen;
+            item.MaTrangThai = hd.MaTrangThai;
+            item.MaNv= hd.MaNv;
+            item.GhiChu= hd.GhiChu;
+            item.DienThoai= hd.DienThoai;
+
+            // Lưu thay đổi vào cơ sở dữ liệu
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {
-            var order = await _orderRepository.GetByIdAsync(id);
-            if (order == null)
+            List<KhachHang> listkh = db.KhachHangs.ToList();
+            ViewBag.KhachHangs = new SelectList(listkh, "MaKh", "HoTen");
+            List<NhanVien> lisnv = db.NhanViens.ToList();
+            ViewBag.NhanViens = new SelectList(lisnv, "MaNv", "HoTen");
+            List<TrangThai> listtt = db.TrangThais.ToList();
+            ViewBag.TrangThais = new SelectList(listtt, "MaTrangThai", "TenTrangThai");
+            List<HoaDon> listhoadon = db.HoaDons.ToList();
+            var item = db.HoaDons.SingleOrDefault(x => x.MaHd == id);
+            if (item == null)
             {
                 return NotFound();
             }
-            return View(order);
+
+            return View(item);
         }
+
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult Delete(HoaDon hd)
         {
-            await _orderRepository.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
+
+            var item = db.HoaDons.SingleOrDefault(x => x.MaHd == hd.MaHd);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            db.HoaDons.Remove(item);
+
+            // Lưu thay đổi vào cơ sở dữ liệu
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+
         }
 
-        private async Task<bool> OrderExists(int id)
-        {
-            var order = await _orderRepository.GetByIdAsync(id);
-            return order != null;
-        }
+
+
     }
 }

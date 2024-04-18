@@ -2,94 +2,67 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutFrame.cshtml";
 }
-<br />
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.MatKhau)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HoTen)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GioiTinh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NgaySinh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DiaChi)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DienThoai)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Hinh)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HieuLuc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VaiTro)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RandomKey)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MatKhau)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HoTen)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GioiTinh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgaySinh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DiaChi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DienThoai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Hinh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HieuLuc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VaiTro)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RandomKey)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MaKh">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaKh">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaKh">Delete</a>
-            </td>
-        </tr>
+<h1 class="text-center" style="background-color: #002D21; color: #daa37f; padding: 10px;">DANH SÁCH KHÁCH HÀNG</h1>
+
+<div class="container mt-5">
+    <p>
+        <center>
+            <div class="card btn btn-primary" style="width: 212.95px; text-align: center; background-color: #002d21">
+
+                <a asp-action="Create">Tạo tài khoản</a>
+
+
+            </div>
+        </center>
+    </p>
+    <table class="table table-striped" style="color: black">
+        <thead>
+            <tr>
+                <th>Mật khẩu</th>
+                <th>Họ tên</th>
+                <th>Giới tính</th>
+                <th>Ngày sinh</th>
+                <th>Địa chỉ</th>
+                <th>Điện thoại</th>
+                <th>Email</th>
+                <th>Hình</th>
+                <th>Hiệu lực</th>
+                <th>Vai trò</th>
+                <th>Random Key</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.MatKhau)</td>
+                    <td>@Html.DisplayFor(modelItem => item.HoTen)</td>
+                    <td>@Html.DisplayFor(modelItem => item.GioiTinh)</td>
+                    <td>@Html.DisplayFor(modelItem => item.NgaySinh)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DiaChi)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DienThoai)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Hinh)</td>
+                    <td>@Html.DisplayFor(modelItem => item.HieuLuc)</td>
+                    <td>@Html.DisplayFor(modelItem => item.VaiTro)</td>
+                    <td>@Html.DisplayFor(modelItem => item.RandomKey)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.MaKh" class="btn btn-primary">Sửa thông tin</a><br />
+                        <a asp-action="Details" asp-route-id="@item.MaKh" class="btn btn-info">Chi tiết</a><br />
+                        <a asp-action="Delete" asp-route-id="@item.MaKh" class="btn btn-danger">Xóa</a><br />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
-    </tbody>
-</table>

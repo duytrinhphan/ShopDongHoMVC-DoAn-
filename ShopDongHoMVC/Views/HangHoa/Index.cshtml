@@ -4,23 +4,33 @@
     Layout = "_DanhSachSanPham";
 }
 
+@section BreadCum {
+    <div class="ent-full" style="
+    top: -52px;
+    ">
+        <div class="ent-banner">
+            <video autoplay muted loop id="myVideo">
+                <source src="~/img/Slide1.mp4" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+            <div class="text-overlay">
+                <h1 style="color: white">Welcome to HoH WatchStore</h1>
+                <p>Apple Watch "Think Different"</p>
+            </div>
+        </div>
+    </div>
 
-<!-- Single Page Header start -->
-@section BreadCum{
-<div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">Shop</h1>
+    <h1 class="text-center text-black display-6">Cửa Hàng</h1>
     <ol class="breadcrumb justify-content-center mb-0">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Pages</a></li>
-        <li class="breadcrumb-item active text-white">Shop</li>
+        <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+        <li class="breadcrumb-item active text-black">Cửa Hàng</li>
     </ol>
-</div>
-
 }
 
-<!-- Single Page Header End -->
-<!-- Fruits Shop Start-->
-@await Html.PartialAsync("ProductItem",Model)
+<!-- Products Display -->
+@await Html.PartialAsync("ProductItem", Model)
+
+<!-- Pagination -->
 <div class="col-12">
     <div class="pagination d-flex justify-content-center mt-5">
         <a href="#" class="rounded">&laquo;</a>
@@ -33,3 +43,13 @@
         <a href="#" class="rounded">&raquo;</a>
     </div>
 </div>
+    <script>
+        // Wait for the page to fully load before running the script
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the video element
+            var video = document.getElementById("myVideo");
+
+            // Set focus on the video element
+            video.focus();
+        });
+    </script>

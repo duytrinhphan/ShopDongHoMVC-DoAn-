@@ -9,6 +9,7 @@ using ShopDongHoMVC.Data;
 using ShopDongHoMVC.Helpers;
 using ShopDongHoMVC.ViewModels;
 using System.Security.Claims;
+using System.Drawing;
 
 namespace ShopDongHoMVC.Controllers
 {
@@ -36,7 +37,7 @@ namespace ShopDongHoMVC.Controllers
         public IActionResult Dangky(RegisterVM model, IFormFile Hinh)
         {
             try
-            {
+            { 
                 if (ModelState.IsValid)
                 {
                     var khachhang = _mapper.Map<KhachHang>(model);
@@ -63,10 +64,50 @@ namespace ShopDongHoMVC.Controllers
 
         #endregion
 
+        public IActionResult QuenMatKhau() 
+        {
+            return View();
+        }
+        [HttpPost]
+
+        public IActionResult QuenMatKhau(string email,string newpassword)
+        {
+            try 
+            {
+                var khachang = db.KhachHangs.SingleOrDefault(x => x.Email == email);
+                if (khachang != null)
+                {
+                    if (string.IsNullOrEmpty(newpassword))
+                    {
+                        ModelState.AddModelError("newpassword", "Vui lòng nhập mật khẩu");
+                        return View();
+                    }
+
+                    khachang.MatKhau = newpassword.ToMd5Hash(khachang.RandomKey);
+                    db.SaveChanges();
+                    ViewBag.SuccessMessage = "Mật khẩu mới đã được cập nhật thành công.";
+                    return View("DangNhap");
+
+                }
+                else
+                {
+                    ModelState.AddModelError("email", "Email không tồn tại !");
+                    return View();
+                }
+            }
+            catch (Exception ex) 
+            {
+                ModelState.AddModelError("", "Đã xảy ra lỗi khi thực hiện yêu cầu đặt lại mật khẩu.");
+                return View();
+            }
+        }
+
+   
         #region Login
         [HttpGet]
         public IActionResult DangNhap(string? ReturnUrl)
-        {
+        {Image quynhphuong=null;
+
             ViewBag.ReturnUrl = ReturnUrl;
             return View();
         }
@@ -139,5 +180,19 @@ namespace ShopDongHoMVC.Controllers
             return Redirect("/");
         }
 
+
+        [Authorize]
+
+        public IActionResult Profile()
+        {
+            var customerid = User.FindFirstValue(MySetting.CLAIM_CUSTOMERID);
+            var khachhang = db.KhachHangs.SingleOrDefault(kh => kh.MaKh == customerid);
+            if(khachhang == null) 
+            {
+                return NotFound();
+            }
+
+            return View(khachhang);
+        }
     }
 }

@@ -2,12 +2,21 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutFrame.cshtml";
 }
 
-<h1>Index</h1>
+<h1 style="text-align: center;background-color: #002D21;color: #daa37f;padding-top: 10px;">QUẢN LÝ ĐƠN HÀNG</h1>
+
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <center>
+        <div class="card btn btn-primary" style="width: 212.95px; text-align: center; background-color: #002d21">
+
+            <a asp-action="Create">Thêm đơn hàng</a>
+
+
+        </div>
+    </center>
 </p>
 <table class="table">
     <thead>
@@ -97,9 +106,9 @@
                 @Html.DisplayFor(modelItem => item.MaTrangThaiNavigation.MaTrangThai)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.MaHd">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MaHd">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MaHd">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.MaHd">Sửa</a> |
+                <a asp-action="Details" asp-route-id="@item.MaHd">Chi tiết</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaHd">Xóa</a>
             </td>
         </tr>
 }

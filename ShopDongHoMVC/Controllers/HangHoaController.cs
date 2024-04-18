@@ -26,15 +26,12 @@ namespace ShopDongHoMVC.Controllers
             {
                 MaSp = p.MaHh,
                 TenSp = p.TenHh,
-                DonGia= p.DonGia ?? 0,
-                HinhAnh=p.Hinh ?? "",
-                MoTaNgan=p.MoTa ?? "",
-                Tenloai=p.MaLoaiNavigation.TenLoai
-
-
-
-
-            }) ; 
+                DonGia = p.DonGia ?? 0,
+                HinhAnh = p.Hinh ?? "",
+                MoTaNgan = p.MoTa ?? "",
+                Tenloai = p.MaLoaiNavigation.TenLoai,
+                SoLanXem = p.SoLanXem + 1
+            }) ;
             
             
                

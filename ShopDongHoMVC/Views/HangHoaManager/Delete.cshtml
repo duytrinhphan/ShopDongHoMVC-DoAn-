@@ -1,87 +1,59 @@
 ﻿@model ShopDongHoMVC.Data.HangHoa
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete Product";
+    Layout = "~/Views/Shared/_LayoutFrame.cshtml";
 }
 
-<h1>Delete</h1>
+<div class="container">
+    <h1 class="text-center my-4" style="background-color: #002D21; color: #daa37f; padding: 10px;">XÓA SẢN PHẨM</h1>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>HangHoa</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TenHh)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TenHh)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TenAlias)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TenAlias)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MoTaDonVi)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MoTaDonVi)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DonGia)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DonGia)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Hinh)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Hinh)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NgaySx)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NgaySx)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GiamGia)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GiamGia)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SoLanXem)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SoLanXem)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MoTa)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MoTa)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaLoaiNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaLoaiNavigation.MaLoai)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaNccNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaNccNavigation.MaNcc)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="MaHh" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+    <div class="alert alert-danger text-center">
+        <i class="bi bi-exclamation-triangle-fill" style="color: red;"></i> BẠN CHẮC CHẮN MUỐN XÓA SẢN PHẨM NÀY CHỨ ? <i class="bi bi-exclamation-triangle-fill" style="color: red;"></i>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <dl class="row">
+                <dt class="col-sm-4">Tên Hàng Hóa:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.TenHh)</dd>
+
+                <dt class="col-sm-4">Tên Alias:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.TenAlias)</dd>
+
+                <dt class="col-sm-4">Mô Tả Đơn Vị:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.MoTaDonVi)</dd>
+
+                <dt class="col-sm-4">Đơn Giá:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.DonGia)</dd>
+
+                <dt class="col-sm-4">Hình Ảnh:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Hinh)</dd>
+
+                <dt class="col-sm-4">Ngày Sản Xuất:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.NgaySx)</dd>
+
+                <dt class="col-sm-4">Giảm Giá:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.GiamGia)</dd>
+
+                <dt class="col-sm-4">Số Lần Xem:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.SoLanXem)</dd>
+
+                <dt class="col-sm-4">Mô Tả:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.MoTa)</dd>
+
+                <dt class="col-sm-4">Loại Hàng Hóa:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.MaLoaiNavigation.TenLoai)</dd>
+
+                <dt class="col-sm-4">Nhà Cung Cấp:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.MaNccNavigation.TenCongTy)</dd>
+            </dl>
+            <br />
+            <form asp-action="Delete" method="post" class="text-center">
+                <input type="hidden" asp-for="MaHh" />
+                <button type="submit" class="btn btn-danger">Xóa</button>
+                <a asp-action="Index" class="btn btn-secondary ml-2">Quay lại danh sách</a>
+            </form>
+        </div>
+    </div>
 </div>

@@ -4,6 +4,7 @@ using ShopDongHoMVC.ViewModels;
 using ShopDongHoMVC.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using ShopDongHoMVC.Service;
+using Microsoft.AspNetCore.Http;
 
 namespace ShopDongHoMVC.Controllers
 {
@@ -33,6 +34,7 @@ namespace ShopDongHoMVC.Controllers
 
 		public IActionResult AddTocart(int id, int quantity = 1)
 		{
+		
 			var cart = Cart;
 			var item = cart.SingleOrDefault(p => p.MaSp == id);
 			if (item == null)
@@ -50,15 +52,20 @@ namespace ShopDongHoMVC.Controllers
 					TenSp = sanpham.TenHh,
 					DonGia = sanpham.DonGia ?? 0,
 					Hinh = sanpham.Hinh ?? string.Empty,
-					SoLuong = quantity
-				};
+					SoLuong = quantity,
+                    ThanhTien = (sanpham.DonGia ?? 0) * quantity
+
+                };
 				cart.Add(item);
 
 			}
 			else
 			{
 				item.SoLuong += quantity;
-			}
+                item.ThanhTien = item.SoLuong * item.DonGia;
+
+
+            }
 			HttpContext.Session.Set(CART_KEY, cart);
 			return RedirectToAction("Index");
 		}
@@ -76,7 +83,34 @@ namespace ShopDongHoMVC.Controllers
 			return RedirectToAction("Index");
 		}
 
-		[Authorize]
+        public IActionResult UpdateCart(int id, int quantity=1)
+        {
+            var cart = Cart;
+            var item = cart.SingleOrDefault(p => p.MaSp == id);
+            if (item != null)
+            {
+                if (quantity <= 0)
+                {
+                    cart.Remove(item);
+                }
+                else
+                {
+                    item.SoLuong = quantity;
+					item.ThanhTien = item.DonGia * quantity;
+                }
+
+                HttpContext.Session.Set(CART_KEY, cart);
+   
+
+            }
+
+            return RedirectToAction("Index");
+        }
+
+
+
+
+        [Authorize]
 		[HttpGet]
 		public IActionResult Checkout()
 		{

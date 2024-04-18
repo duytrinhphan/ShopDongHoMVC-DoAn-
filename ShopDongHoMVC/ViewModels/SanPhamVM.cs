@@ -8,5 +8,7 @@
         public double DonGia {  get; set; }
         public string MoTaNgan {  get; set; }
         public string Tenloai {  get; set; }
+
+        public int SoLanXem { get; set; }
     }
 }

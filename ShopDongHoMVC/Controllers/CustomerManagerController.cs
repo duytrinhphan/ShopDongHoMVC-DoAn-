@@ -6,99 +6,228 @@ namespace ShopDongHoMVC.Controllers
 {
     public class CustomerManagerController : Controller
     {
-        private readonly IKhachHangRepository _khachHangRepository;
-        public CustomerManagerController(IKhachHangRepository khachHangRepository)
+
+
+        private readonly DongHoShopMvcContext db;
+        public CustomerManagerController(DongHoShopMvcContext context)
         {
-            _khachHangRepository = khachHangRepository;
+            db = context;
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var customers = await _khachHangRepository.GetAllAsync();
-            return View(customers);
+            List<KhachHang> listkh = db.KhachHangs.ToList();
+            return View(listkh);
         }
+
+
         public IActionResult Create()
         {
+
+            List<KhachHang> listkh = db.KhachHangs.ToList();
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(KhachHang customer)
+        public IActionResult Create(KhachHang kh)
         {
-            if (ModelState.IsValid)
+
+            if (kh == null)
             {
-                await _khachHangRepository.AddAsync(customer);
-                return RedirectToAction(nameof(Index));
+                return View();
             }
-            return View(customer);
+
+            db.KhachHangs.Add(kh);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
+
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Details(string id)
         {
-            var customer = await _khachHangRepository.GetByIdAsync(id);
-            return View(customer);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, KhachHang customer)
-        {
-            if (id != customer.MaKh)
+            var item = db.KhachHangs.FirstOrDefault(x => x.MaKh.Equals(id));
+            if (item == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await _khachHangRepository.UpdateAsync(customer);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!await CustomerExists(id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+            return View(item);
+        }
 
-                return RedirectToAction(nameof(Index));
+
+
+        public IActionResult Edit(string id)
+        {
+
+            List<KhachHang> listkh = db.KhachHangs.ToList();
+
+            var item = db.KhachHangs.FirstOrDefault(x => x.MaKh.Equals(id));
+            if (item == null)
+            {
+                return NotFound();
             }
 
-            return View(customer);
+            return View(item);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Details(string id)
+
+        [HttpPost]
+        public IActionResult Edit(KhachHang kh)
         {
-            var customer = await _khachHangRepository.GetByIdAsync(id);
-            return View(customer);
+
+            var item = db.KhachHangs.FirstOrDefault(x => x.MaKh.Equals(kh.MaKh));
+            if (item == null)
+            {
+                return NotFound();
+            }
+            item.MaKh = kh.MaKh;
+            item.MatKhau = kh.MatKhau;
+            item.HoTen = kh.HoTen;
+            item.GioiTinh= kh.GioiTinh;
+            item.NgaySinh= kh.NgaySinh;
+            item.DiaChi = kh.DiaChi;
+            item.DiaChi = kh.DiaChi;
+            item.DienThoai = kh.DienThoai;
+            item.Email=kh.Email;
+            item.Hinh = kh.Hinh;
+            item.HieuLuc = kh.HieuLuc;
+            item.VaiTro = kh.VaiTro;
+            item.RandomKey = kh.RandomKey;
+
+
+            // Lưu thay đổi vào cơ sở dữ liệu
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(string id)
+        public IActionResult Delete(string id)
         {
-            var customer = await _khachHangRepository.GetByIdAsync(id);
-            return View(customer);
+
+            List<KhachHang> listkh = db.KhachHangs.ToList();
+
+            var item = db.KhachHangs.FirstOrDefault(x => x.MaKh.Equals(id));
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            return View(item);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            await _khachHangRepository.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
-        }
 
-        private async Task<bool> CustomerExists(string id)
+        public IActionResult Delete(KhachHang kh)
         {
-            var customer = await _khachHangRepository.GetByIdAsync(id);
-            return customer != null;
+
+            var item = db.KhachHangs.FirstOrDefault(x => x.MaKh.Equals(kh.MaKh));
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            db.KhachHangs.Remove(item);
+
+            // Lưu thay đổi vào cơ sở dữ liệu
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+
         }
+        //private readonly IKhachHangRepository _khachHangRepository;
+        //public CustomerManagerController(IKhachHangRepository khachHangRepository)
+        //{
+        //    _khachHangRepository = khachHangRepository;
+        //}
+        //public async Task<IActionResult> Index()
+        //{
+        //    var customers = await _khachHangRepository.GetAllAsync();
+        //    return View(customers);
+        //}
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(KhachHang customer)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        await _khachHangRepository.AddAsync(customer);
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(customer);
+        //}
+
+        //[HttpGet]
+        //public async Task<IActionResult> Edit(string id)
+        //{
+        //    var customer = await _khachHangRepository.GetByIdAsync(id);
+        //    return View(customer);
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(string id, KhachHang customer)
+        //{
+        //    if (id != customer.MaKh)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            await _khachHangRepository.UpdateAsync(customer);
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!await CustomerExists(id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+
+        //        return RedirectToAction(nameof(Index));
+        //    }
+
+        //    return View(customer);
+        //}
+
+        //[HttpGet]
+        //public async Task<IActionResult> Details(string id)
+        //{
+        //    var customer = await _khachHangRepository.GetByIdAsync(id);
+        //    return View(customer);
+        //}
+
+        //[HttpGet]
+        //public async Task<IActionResult> Delete(string id)
+        //{
+        //    var customer = await _khachHangRepository.GetByIdAsync(id);
+        //    return View(customer);
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(string id)
+        //{
+        //    await _khachHangRepository.DeleteAsync(id);
+        //    return RedirectToAction(nameof(Index));
+        //}
+
+        //private async Task<bool> CustomerExists(string id)
+        //{
+        //    var customer = await _khachHangRepository.GetByIdAsync(id);
+        //    return customer != null;
+        //}
     }
 }

@@ -4,13 +4,13 @@
     <div class="mb-3">
         <h4>THƯƠNG HIỆU</h4>
         <ul class="list-unstyled fruite-categorie">
-            @foreach(var item in Model)
+            @foreach (var item in Model)
             {
                 <li>
                     <div class="d-flex justify-content-between fruite-name">
                         <a asp-controller="HangHoa" asp-action="Index" asp-route-loai="@item.MaLoai">
-                            <i class="fa-solid fa-arrow-right"></i>@item.TenLoai
-                            </a>
+                            <i class="fa-solid fa-clock"></i> @item.TenLoai
+                        </a>
                         <span>(@item.SoLuong)</span>
                     </div>
                 </li>

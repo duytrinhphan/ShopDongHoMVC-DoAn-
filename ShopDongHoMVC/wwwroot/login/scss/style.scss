@@ -1,0 +1,21 @@
+//Common
+@import 'common/extend.scss';
+@import 'common/fonts.scss';
+@import 'common/minxi.scss';
+@import 'common/variables.scss';
+@import 'common/global.scss';
+
+//layout
+@import 'layouts/main.scss';
+
+// Responsive
+@import 'layouts/responsive.scss';
+body {
+    font-size: 13px;
+    line-height: 1.8;
+    background-image: src(~/login/images/chill-4k-mountain-sunset-art-6jor3hh9q5cm5bjj.jpg) !important;
+    color: #222;
+    background: #f8f8f8;
+    font-weight: 400;
+    font-family: Poppins;
+}

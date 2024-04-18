@@ -1,3 +1,229 @@
+﻿
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap')
+
+*{
+    margin: 0;
+    font-family: 'Varela Round', sans-serif !important;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--dark-color); /* Sử dụng màu chữ tối */
+    background-color: var(--white-color); /* Sử dụng màu nền trắng */
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.form-submit {
+    display: inline-block;
+    background: #6dabe4;
+    color: #fff;
+    border-bottom: none;
+    width: auto;
+    font-family: 'Varela Round', sans-serif !important;
+    padding: 15px 39px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -ms-border-radius: 5px;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+input {
+    width: 100%;
+    display: block;
+    border: none;
+    border-bottom: 1px solid #999;
+    padding: 6px 30px;
+    font-family: Poppins;
+    box-sizing: border-box;
+}
+.ent-full {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Styling for the video banner */
+.ent-banner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Styling for the video element */
+#myVideo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Styling for the text overlay */
+.text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+}
+
+/* Styling for the breadcrumb */
+.breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    margin: 20px 0;
+    list-style: none;
+}
+
+/* Styling for the pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+    .pagination a {
+        padding: 8px 16px;
+        text-decoration: none;
+        color: #333;
+        border: 1px solid #ccc;
+        margin: 0 5px;
+        border-radius: 5px;
+    }
+
+        .pagination a.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:root {
+    --primary-color: #ffd700; /* Màu vàng */
+    --secondary-color: #000; /* Màu đen */
+    --white-color: #fff; /* Màu trắng */
+    --light-color: #f8dfad; /* Màu nhạt */
+    --dark-color: #333; /* Màu tối */
+}
+.text-primary {
+    color: #daa37f !important;
+}
+.fixed-top {
+    background: #002D21 !important;
+}
+.nav-link.active {
+    color: #daa37f !important;
+}
+/* Navbar */
+.navbar {
+    background-color: #ffd700; /* Màu vàng */
+    color: #000; /* Màu chữ đen */
+}
+
+.navbar-toggler-icon {
+    color: #000; /* Màu biểu tượng đen */
+}
+
+.navbar-nav .nav-link {
+    color: #000; /* Màu chữ đen cho các liên kết trong navbar */
+}
+
+    .navbar-nav .nav-link:hover {
+        color: #fff; /* Chuyển sang màu trắng khi di chuột qua */
+        background-color: #81907f; /* Đổi màu nền khi di chuột qua */
+    }
+
+/* Button Search */
+.btn-search {
+    background-color: #000; /* Màu nền đen */
+    color: #ffd700; /* Màu chữ vàng */
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    background-color: #81907f; /* Màu nền đen */
+}
+
+.dropdown-item {
+    color: #daa37f; /* Màu chữ vàng */
+}
+
+    .dropdown-item:hover {
+        background-color: #333; /* Đổi màu nền khi di chuột qua */
+    }
+
+/* Modal Search */
+.modal-content {
+    background-color: #ffd700; /* Màu nền vàng */
+    color: #000; /* Màu chữ đen */
+}
+
+/* Footer */
+.footer {
+    background-color: #333; /* Màu nền tối */
+    color: #ffd700; /* Màu chữ vàng */
+}
+
+/* Back to Top Button */
+.back-to-top {
+    background-color: #ffd700; /* Màu nền vàng */
+    color: #000; /* Màu chữ đen */
+}
+
+    .back-to-top:hover {
+        background-color: #000; /* Đổi màu nền khi di chuột qua */
+        color: #ffd700; /* Màu chữ vàng khi di chuột qua */
+    }
+
+
+/* Customize Owl Carousel navigation buttons */
+.owl-prev, .owl-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-size: 24px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 50px;
+}
+.rounded .position-relative .fruite-item{
+    border-color: black
+
+}
+.owl-prev {
+    left: 10px;
+}
+
+.owl-next {
+    right: 10px;
+}
 
 /*** Spinner Start ***/
 #spinner {
@@ -5,7 +231,7 @@
     visibility: hidden;
     transition: opacity .8s ease-out, visibility 0s linear .5s;
     z-index: 99999;
- }
+}
 
  #spinner.show {
      transition: opacity .8s ease-out, visibility 0s linear .0s;
@@ -217,14 +443,14 @@
     margin-left: 20px;
 }
 
-.page-header {
+/*.page-header {
     position: relative;
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(https://lh3.googleusercontent.com/pw/AP1GczMvEV0SMhlmJ7i12_E58Mhe_ByCduhJpW6vKKhxd0XWGvplS6-J2Y3yomX-plGjJoWpnMG0noN7EK4dvKTLp8rS0v2wani04IC9R3yh3Xvm5Xs4TIxNngrOxxA1zTT13Id31pJM9e46AEmSDV6m4hZR=w2048-h596-s-no?authuser=0);
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
     background-repeat: no-repeat;
     object-fit: cover;
     height: 400px;
     background-position-y: -127px;
-}
+}*/
 
 @media (min-width: 992px) {
     .hero-header,
@@ -299,6 +525,7 @@
 }
 
 .fruite .fruite-item {
+    background-color: #002D21;
     height: 100%;
     transition: 0.5s;
 }

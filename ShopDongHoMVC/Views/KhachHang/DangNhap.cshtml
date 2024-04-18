@@ -1,32 +1,51 @@
 ﻿@model ShopDongHoMVC.ViewModels.LoginVM
 @{
-	ViewData["Title"] = "Đăng nhập";
+    ViewData["Title"] = "Đăng nhập";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
-<div class="container-fluid py-5">
-	<div class="container py-5">
-		<h1 class="mb-4">Đăng nhập</h1>
-		<form asp-action="DangNhap" asp-route-returnurl="@ViewBag.ReturnUrl">
-			<div class="text-danger" asp-validation-summary="All"></div>
-			<div class="row">
-				<div class="row">
-					<div class="col-md-12 col-lg-6">
-						<div class="form-item w-100">
-							<label asp-for="@Model.UserName" class="form-label my-3"></label><sup>*</sup>
-							<input asp-for="@Model.UserName" class="form-control">
-							<span asp-validation-for="@Model.UserName" class="text-danger"></span>
-						</div>
-					</div>
-					<div class="col-md-12 col-lg-6">
-						<label asp-for="@Model.Password" class="form-label my-3"></label><sup>*</sup>
-						<input asp-for="@Model.Password" class="form-control">
-						<span asp-validation-for="@Model.Password" class="text-danger"></span>
-					</div>
-					<div class="row g-4 text-center align-items-center justify-content-center pt-4">
-						<button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Đăng nhập</button>
-						<a asp-control="KhachHang" asp-action="QuenMatKhau" title="Quên mật khẩu">Quên mật khẩu</a>
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
-</div>
+
+<section class="sign-in">
+    <div class="container">
+        <div class="signin-content">
+            <div class="signin-image">
+                <figure><img src="~/login/images/signin-image.jpg" alt="sing up image"></figure>
+                <a href="#" class="signup-image-link" style="font-family: 'Varela Round', sans-serif !important;">Tạo tài khoản mới</a>
+                <a asp-controller="KhachHang" class="signup-image-link" asp-action="QuenMatKhau" style="font-family: 'Varela Round', sans-serif !important;">Quên mật khẩu</a>
+               
+            </div>
+
+            <div class="signin-form">
+                <h2 class="form-title" style="font-family: 'Varela Round', sans-serif !important;">Đăng nhập</h2>
+                <form method="POST" class="register-form" id="login-form">
+                    <div class="form-group" style="font-family: 'Varela Round', sans-serif !important;">
+                        <label asp-for="@Model.UserName" class="form-label my-3"><i class="zmdi zmdi-account material-icons-name"></i></label><sup style="margin-bottom:-10px !important">*</sup>
+                        <input asp-for="@Model.UserName" class="form-control">
+                        <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="font-family: 'Varela Round', sans-serif !important;">
+                        <label asp-for="@Model.Password" class="form-label my-3"><i class="zmdi zmdi-lock"></i></label><sup>*</sup>
+                        <input asp-for="@Model.Password" class="form-control">
+                        <span asp-validation-for="@Model.Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="font-family: 'Varela Round', sans-serif !important;">
+                        <input type="checkbox" name="remember-me" id="remember-me" class="agree-term">
+                        <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
+                    </div>
+                    <div class="form-group form-button">
+                        <input type="submit" name="signin" id="signin" class="form-submit" value="Đăng Nhập">
+                       
+                    </div>
+                </form>
+                <div class="social-login" style="font-family: 'Varela Round', sans-serif !important;">
+                    <span class="social-label" style="font-family: 'Varela Round', sans-serif !important;">Đăng nhập bằng </span>
+                    <ul class="socials">
+                        <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook" id="icon"></i></a></li>
+                        <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter" id="icon"></i></a></li>
+                        <li><a href="#"><i class="display-flex-center zmdi zmdi-google" id="icon"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

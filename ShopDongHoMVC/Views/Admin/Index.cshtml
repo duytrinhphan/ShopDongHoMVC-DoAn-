@@ -1,11 +1,30 @@
-﻿<br>
-<br />
-<h1>Chào mừng đến với form admin</h1>
+﻿<!-- Main Content -->
+<!-- Main Content -->
+<div class="container mt-3">
+    <h3 style="text-align: center">CHÀO MỪNG ĐẾN VỚI TRANG QUẢN LÝ</h3>
+    <div class="row">
+        <!-- Danh sách chức năng -->
+        <div class="col-md-3">
 
-<a asp-controller="HangHoaManager" asp-action="Index">Quản lý sản phẩm</a>
-<br />
-<a asp-controller="CategoryManager" asp-action="Index">Quản lý loại sản phẩm</a>
-<br />
-<a asp-controller="CustomerManager" asp-action="Index">Quản lý tài khoản</a>
-<br />
-<a asp-controller="OrderManager" asp-action="Index">Quản lý đơn hàng</a>
+            <ul class="nav flex-column">
+                <li>
+                    <a asp-controller="HangHoaManager" asp-action="Index" target="contentFrame" class="btn btn-primary mt-3" style="width: 212.95px; text-align: left"><i class="bi bi-caret-right-fill"></i> Quản lý sản phẩm</a>
+                </li>
+                <li>
+                    <a asp-controller="CategoryManager" asp-action="Index" target="contentFrame" class="btn btn-primary mt-3"><i class="bi bi-caret-right-fill"></i> Quản lý loại sản phẩm</a>
+                </li>
+                <li>
+                    <a asp-controller="CustomerManager" asp-action="Index" target="contentFrame" class="btn btn-primary mt-3" style="width: 212.95px; text-align: left"><i class="bi bi-caret-right-fill"></i> Quản lý tài khoản</a>
+                </li>
+                <li>
+                    <a asp-controller="OrderManager" asp-action="Index" target="contentFrame" class="btn btn-primary mt-3" style="width: 212.95px; text-align: left"><i class="bi bi-caret-right-fill"></i> Quản lý đơn hàng</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Khung hiển thị nội dung -->
+        <div class="col-md-9">
+            <iframe name="contentFrame" id="contentFrame" width="110%" height="600px" frameborder="0"></iframe>
+        </div>
+    </div>
+</div>

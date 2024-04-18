@@ -1,9 +1,83 @@
-﻿@{
-	ViewData["Title"] = "Profile";
+﻿@model ShopDongHoMVC.Data.KhachHang
+@{
+    ViewData["Title"] = "Profile";
 }
 
-<h1>Profile</h1>
-<div class="container">
-	<h2>Welcome @Context.User.Identity.Name</h2>
-	<a asp-action="DangXuat">Đăng xuất</a>
-</div>
+<section style="background-color: #eee;">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb" class="bg-white rounded-3 p-3 mb-4">
+                    <center>
+                    <h3><a class="breadcrumb-item active" aria-current="page" style="color: #daa37f">THÔNG TIN TÀI KHOẢN</a>
+                        </h3>
+                    </center>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <img src="~/Hinh/KhachHang/@Model.Hinh" alt="avatar" class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
+                        <h5 class="my-3">@Model.HoTen</h5>
+                        <p class="text-muted mb-4">@Model.DiaChi</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Họ và tên</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@Model.HoTen</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Email</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@Model.Email</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Số điện thoại</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@Model.DienThoai</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Địa chỉ</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@Model.DiaChi</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    /* CSS để áp dụng hình tròn cho hình ảnh */
+    .rounded-circle {
+        border-radius: 50%;
+        overflow: hidden; /* Ẩn bớt phần vượt ra ngoài của hình ảnh */
+    }
+
+        .rounded-circle img {
+            width: 100%;
+            height: auto;
+        }
+</style>
